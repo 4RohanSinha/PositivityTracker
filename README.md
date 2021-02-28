@@ -1,5 +1,5 @@
 # PositivityTracker
-Our project for LancerHacks 2021.
+Our project for LancerHacks 2021 - Rohan Sinha and Aditya Tomar
 
 ## Inspiration
 
