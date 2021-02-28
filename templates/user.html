@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+      .warning {
+        color: red;
+      }
+    </style>
+    <title>{{user.firstName}} {{user.lastName}}'s Dashboard</title>
+  </head>
+  <body>
+    <div id="app_navbar">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/" id="welcomeTitle">Positivity Tracker</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Dashboard</a></li>
+            <li><a href="/users/{{user.id}}/diary">Full Diary</a></li>
+            <li><a href="/users/{{user.id}}/addEntry">Add New Diary Entry</a></li>
+            <li><a onclick="return confirm('Are you sure you want to delete your account?');" href="/deleteuser/{{user.id}}">Delete User</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <h1 id="welcomeTitle">{{user.firstName}} {{user.lastName}}'s Dashboard</h1><br />
+
+    {% if user.entries|length == 0 %}
+      <span class="text-muted"><strong>There are no diary entries yet. To get started, click on the "Add New Diary Entry" button at the top.</strong></span>
+    {% endif %}
+
+    {% if user.entries|length >= 2 and user.entries[(user.entries|length)-1].sentimentLevel - user.entries[(user.entries|length)-2].sentimentLevel < -0.25 %}
+      <span class="warning"><strong>Your happiness is decreasing at a rapid rate. You may want to talk to your counselor.</strong></span>
+
+    {% elif user.entries|length > 0 and user.entries[(user.entries|length)-1].sentimentLevel < -0.2 %}
+      <span class="warning"><strong>Your happiness is really low. You may want to talk to your counselor.</strong></span>
+    {% endif %}
+    <br /><br />
+    <span class="text-muted"><strong>Instructions to read the graph</strong>: All values below 0 indicate that you are feeling worse, while values above 0 indicate that you are feeling better. </span>
+    <br /><br />
+    <canvas id="positivityChart" width="1600" height="900"></canvas>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script>
+
+    let store = {
+      data: {
+        dates: [],
+        time_since: [],
+        positivityLevels: [],
+        ids: [],
+        entries: []
+      },
+      chartCanvas: document.getElementById("positivityChart"),
+      ctx: document.getElementById("positivityChart").getContext("2d"),
+      lineChart: {}
+    };
+
+    fetch("/users/{{user.id}}/entries")
+      .then((data) => data.json())
+      .then((data) => {
+        let entryIds = Object.keys(data);
+        entryIds.forEach((key, i) => {
+          store.data.dates.push(data[key].date_written);
+          store.data.time_since.push(data[key].time_since);
+          store.data.positivityLevels.push(data[key].sentimentLevel);
+          store.data.ids.push(key);
+          store.data.entries.push(data[key].entry)
+        });
+        loadGraph()
+      })
+      .catch((error) => console.error(error));
+
+    const loadGraph = () => {
+      const graphData = {
+        labels: store.data.dates,
+        datasets: [{
+          label: "Your Happiness",
+          fill: false,
+          borderColor: "#0000ff",
+          pointRadius: 10,
+          pointHoverRadius: 10,
+          data: store.data.positivityLevels,
+          entry_id: store.data.ids
+        }]
+      }
+      const options = {
+        responsive: true,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      };
+
+      store.lineChart = new Chart(store.ctx, {
+        type: 'line',
+        data: graphData,
+        options: options
+      });
+
+      store.lineChart.options.onClick = function(evt, activeElements) {
+        if (activeElements.length > 0) {
+          let elementIndex = activeElements[0]._index;
+          let entryId = store.lineChart.data.datasets[0].entry_id[elementIndex];
+          window.open("/users/{{user.id}}/view_entry/" + entryId, "_blank")
+        }
+      };
+
+    };
+
+    window.onload = loadGraph;
+
+
+    </script>
+  </body>
+</html>

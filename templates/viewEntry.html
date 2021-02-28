@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>View Diary Entry</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+
+      .linkToBtn {
+        background-color: gainsboro;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 20px;
+        color: black;
+      }
+
+      .previous:hover {
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      #sliderSentiment {
+        width: 20%;
+        display: inline-block;
+
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" id="welcomeTitle">Diary Entry: Details</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/users/{{user.id}}">Back to Dashboard</a></li>
+          <li><a href="/users/{{user.id}}/diary">Back to Diary</a></li>
+          <li><a href="/users/{{user.id}}/edit_entry/{{entry.id}}">Edit Entry</a></li>
+          <li><a onclick="return confirm('Are you sure you want to delete this entry?');" href="/users/{{user.id}}/delete_entry/{{entry.id}}">Delete Entry</a></li>
+        </ul>
+      </div>
+    </nav>
+    <span class="text-muted">Edit and delete options are in the navbar above.</span><br /><br /><br />
+    <strong><span class="text-muted">Slider: how positive you feel.</span></strong>
+    <br /><br />
+    <div class="slidecontainer">
+      <span class="text-muted">Horrible</span>&nbsp;&nbsp;<input type="range" min="1" max="100" value="{{(((entry.sentimentLevel)/2)+0.5)*100}}" id="sliderSentiment" disabled="disabled" />&nbsp;&nbsp;<span class="text-muted">The best I could ever be</span>
+    </div>
+    <br /><br />
+    <strong><span class="text-muted">Entry:</span></strong><br />
+    {{entry.entry}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

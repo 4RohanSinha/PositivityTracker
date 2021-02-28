@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+    </style>
+    <title>Create New Entry</title>
+  </head>
+  <body>
+    <div id="app_navbar">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/" id="welcomeTitle">Positivity Tracker</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="/users/{{user_id}}">Dashboard</a></li>
+            <li><a href="/users/{{user_id}}/diary">Full Diary</a></li>
+            <li class="active"><a href="#">Add New Diary Entry</a></li>
+            <li><a onclick="return confirm('Are you sure you want to delete your account?');" href="/deleteuser/{{user_id}}">Delete User</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <form action="/users/{{user_id}}/submitAddedEntry" method="post">
+      <label for="diary_entry">Type your entry below:</label><br /><textarea class="form-control" id="diary_entry" name="diary_entry" rows="10" cols="50" required="required"></textarea>
+      <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

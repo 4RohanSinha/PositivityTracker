@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Diary Entry</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+
+      .linkToBtn {
+        background-color: gainsboro;
+        padding: 5px 8px;
+        border-radius: 5px;
+        font-size: 20px;
+        color: black;
+      }
+
+      .previous:hover {
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      #sliderSentiment {
+        width: 20%;
+        display: inline-block;
+
+      }
+
+    </style>
+  </head>
+  <body>
+    <h2 id="welcomeTitle">Diary Entry: Details</h2>
+    <a href="javascript:history.back()">Back</a>
+    <form action="/users/{{user_id}}/submitEntryEdits/{{entry.id}}" method="post">
+      <br /><br />
+      <div class="slidecontainer">
+        <span class="text-muted">Horrible</span>&nbsp;&nbsp;<input name="sentimentLevel" type="range" min="1" max="100" value="{{(((entry.sentimentLevel)/2)+0.5)*100}}" class="form-control" id="sliderSentiment" />&nbsp;&nbsp;<span class="text-muted">The best I could ever be</span>
+      </div>
+      <br /><br />
+      <textarea name="diary_entry" rows="10" cols="50" class="form-control">{{entry.entry}}</textarea><br />
+      <input type="checkbox" name="conductSentimentAnalysisAgain" class="form-control" id="conductSentimentAnalysisAgain" /><label for="conductSentimentAnalysisAgain">Do you want the app to recalculate how happy you feel? The value from the slider above <strong>will be overriden.</strong></label>
+      <br />
+      <input type="submit" value="Submit" class="form-control" id="submitBtn" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{user.firstName}} {{user.lastName}}'s Diary</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+
+      #sliderSentiment {
+        width: 20%;
+        display: inline-block;
+      }
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/" id="welcomeTitle">Positivity Tracker</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li><a href="/users/{{user.id}}">Dashboard</a></li>
+          <li class="active"><a href="#">Full Diary</a></li>
+          <li><a href="/users/{{user.id}}/addEntry">Add New Diary Entry</a></li>
+          <li><a onclick="return confirm('Are you sure you want to delete your account?');" href="/deleteuser/{{user.id}}">Delete User</a></li>
+        </ul>
+      </div>
+    </nav>
+    <h1 id="welcomeTitle">{{user.firstName}} {{user.lastName}}'s Diary</h1><br />
+
+    {% if user.entries|length == 0 %}
+      <span class="text-muted">You have not added any diary entries yet. To get started, type in the text field below or click on the "Add New Diary Entry" button above.</span>
+    {% endif %}
+
+    <i>Scroll down to see diary entries.</i><br />
+    <i>Note: Edit entries by clicking the button "See entry in detail" and then "Edit Entry" on the navigation bar of the next page.</i>
+    <br /><br />
+    <form action="/users/{{user.id}}/submitAddedEntryFromDiary" method="post">
+      <label for="diary_entry">Type a new entry below:</label><br /><textarea class="form-control" id="diary_entry" name="diary_entry" rows="10" cols="50" required="required"></textarea>
+      <input type="submit" value="Submit" class="btn btn-default" />
+    </form>
+    <br /><br />
+    <div id="entries">
+      {% for i in range(user.entries|length)|reverse %}
+        <div class="entry">
+          <h4><strong>Entry #{{i+1}}</strong></h4>
+          <span class="text-muted">Created {{user.entries[i].date_written}}</span><br />
+          <span class="text-muted">Last update {{user.entries[i].date_last_updated}}</span><br />
+          <span class="text-muted"><u>Sentiment level</u><br /></span><span class="text-muted">Horrible</span>&nbsp;&nbsp;<span><input type="range" min="1" max="100" value="{{(((user.entries[i].sentimentLevel)/2)+0.5)*100}}" class="slider" id="sliderSentiment" disabled="disabled" /></span>&nbsp;&nbsp;<span class="text-muted">The best I could ever be</span><br /><br />
+          <span class="text-muted"><a href="/users/{{user.id}}/view_entry/{{user.entries[i].id}}">See entry in detail</a></span><br />
+          <span class="text-muted"><a onclick="return confirm('Are you sure you want to delete this entry?');" href="/users/{{user.id}}/delete_entry_from_diary/{{user.entries[i].id}}" style="color: red;">Delete entry</a></span>
+          <textarea disabled="disabled" class="form-control">{{user.entries[i].entry}}</textarea>
+        </div>
+        <hr />
+      {% endfor %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>

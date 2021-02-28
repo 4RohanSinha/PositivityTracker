@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create New Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+      #welcomeTitle {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="welcomeTitle">Sign up for Positivity Tracker</h1><br /><br />
+    <form action="/finishcreateuser" method="post">
+      <label for="firstName">First Name: </label><input type="text" id="firstName" name="firstName" class="form-control" required="required"/>
+      <label for="lastName">Last Name: </label><input type="text" id="lastName" name="lastName" class="form-control" required="required"/>
+      <br /><input type="submit" value="Submit" class="btn btn-default" />
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
