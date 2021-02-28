@@ -1,7 +1,6 @@
 # PositivityTracker
 Our project for LancerHacks 2021.
 
-
 ## Inspiration
 
 The inspiration for this project came from our own experiences, as well as those of our peers. Ever since the beginning of this pandemic, it has been difficult for school students, particularly in terms of mental health, to express their true feelings and anxieties. These experiences led us to consider creating an application to monitor students' emotions by having them write in a diary.
@@ -39,6 +38,9 @@ Then, to create the database:
 `createdb positivityTracker`
 
 Then, to set the flask app and run:
-```export FLASK_APP=route.py
-flask run```.
+```
+export FLASK_APP=route.py
+flask run
+
+```
 Additionally, the username in route.py on line 7, for the database URI, has to be changed to the username on the computer the project is being run.
