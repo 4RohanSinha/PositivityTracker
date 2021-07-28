@@ -14,36 +14,10 @@ nltk.download([
 
 sia = SentimentIntensityAnalyzer()
 
-def highest_val(sentence: str) -> float:
-    negative = sia.polarity_scores(sentence)["neg"]
-    neutral = sia.polarity_scores(sentence)["neu"]
-    positive = sia.polarity_scores(sentence)["pos"]
-    compound = sia.polarity_scores(sentence)["compound"]
-    max_val = 0
-    min_val = 0
-    lst = sentence.split()
-    if len(lst) <= 4:
-        if compound < 0:
-            return (neutral+compound)/2
-        elif compound > 0:
-            return (neutral+compound)/2
-        elif compound == 0:
-            return compound
-    if compound < 0:
-        if abs(negative) > abs(compound):
-            max_val = -negative
-        else:
-            max_val = compound
-    elif compound > 0:
-        if positive > compound:
-            max_val = positive
-        else:
-            max_val = compound
-    elif compound == 0:
-        max_val = compound
-    return max_val
+def compound_val(sentence: str) -> float:
+    return sia.polarity_scores(sentence)["compound"]
 
-stopwords = nltk.corpus.stopwords.words("english")[:131]
+stopwords = nltk.corpus.stopwords.words("english")
 def sentiment_analysis(entry: str) -> float:
     entry = nltk.word_tokenize(entry)
     entry = [word for word in entry if not word.lower() in stopwords]
@@ -54,6 +28,6 @@ def sentiment_analysis(entry: str) -> float:
     entry = (" ").join(entry)
     entry = nltk.sent_tokenize(entry)
     scores = [
-        highest_val(sentence) for sentence in entry
+        compound_val(sentence) for sentence in entry
     ]
     return mean(scores)
