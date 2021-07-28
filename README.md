@@ -32,15 +32,18 @@ Some next steps for Positivity Tracker include working more on the NLTK model to
 ## A few notes for running the project
 A few commands have to be run for this project to work.
 First, to start the PostgreSQL server:
-`pg_ctl -D /usr/local/var/postgres start`
+- Windows: `Windows key + R -> services.msc -> find postgresql -> click start`
+- MacOS/Linux: `terminal -> pg_ctl -D /usr/local/var/postgres start`
 
 Then, to create the database:
-`createdb positivityTracker`
+- Windows CMD: `createdb -U postgres positivityTracker`
+- MacOS/Linux: `createdb positivityTracker`
 
-Then, to set the flask app and run:
-```
-export FLASK_APP=route.py
-flask run
+Then, to set the flask app:
+- Windows CMD: `set FLASK_APP=route.py`
+- MacOS/Linux: `export FLASK_APP=route.py`
 
-```
+Finally, to run:
+`flask run`
+
 Additionally, the username in route.py on line 7, for the database URI, has to be changed to the username on the computer the project is being run.
