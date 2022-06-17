@@ -1,0 +1,18 @@
+certifi==2021.10.8
+click==8.1.3
+Flask==2.1.2
+Flask-SQLAlchemy @ file:///tmp/build/80754af9/flask-sqlalchemy_1616180561581/work
+greenlet @ file:///opt/concourse/worker/volumes/live/b27b4e9e-4697-4d57-403b-f82d36a391ca/volume/greenlet_1628888146890/work
+gunicorn @ file:///opt/concourse/worker/volumes/live/f7b39e0f-a194-41b6-4722-90b8829755e9/volume/gunicorn_1617120639810/work
+importlib-metadata==4.11.4
+itsdangerous==2.1.2
+Jinja2==3.1.2
+joblib @ file:///tmp/build/80754af9/joblib_1635411271373/work
+MarkupSafe==2.1.1
+nltk @ file:///opt/conda/conda-bld/nltk_1645628263994/work
+psycopg2 @ file:///opt/concourse/worker/volumes/live/7541fe58-2a45-4073-5d69-313e733fc729/volume/psycopg2_1612298592535/work
+regex @ file:///opt/concourse/worker/volumes/live/92c80cd7-7907-4d3e-4d09-20e3cc1c2619/volume/regex_1648447728151/work
+SQLAlchemy @ file:///opt/concourse/worker/volumes/live/bfe20d71-b806-4187-4783-cd5d96eb1af2/volume/sqlalchemy_1647599831148/work
+tqdm @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_6cb3db64-b7e1-4db2-ab0b-f944920e5367lekntvc5/croots/recipe/tqdm_1650891088614/work
+Werkzeug==2.1.2
+zipp==3.8.0
