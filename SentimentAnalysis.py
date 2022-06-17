@@ -1,9 +1,7 @@
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 from statistics import mean
-nltk.download([
-    "stopwords"
-])
+nltk.download("stopwords")
 
 sia = SentimentIntensityAnalyzer()
 
