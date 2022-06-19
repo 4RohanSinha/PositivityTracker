@@ -2,13 +2,14 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 import SentimentAnalysis
+import os
 
 app = Flask(__name__)
 ENV = 'prod'
 if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost/PositivityTracker'
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ullcptfjqacwlx:c83dece25764d848c8fd8139a9a755f0ca414a95261bb9346cf3b28f3f1cb34f@ec2-52-71-23-11.compute-1.amazonaws.com:5432/ddj95docf728de'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
