@@ -172,3 +172,6 @@ def deleteEntryFromDiaryView(user_id, entry_id):
 #***********************APPLY FUNCTION FROM SENTIMENT ANALYSIS*****************
 def getSentimentPositivityOf(entry):
     return SentimentAnalysis.sentiment_analysis(entry)
+
+if __name__ == '__main__':
+    app.run()
