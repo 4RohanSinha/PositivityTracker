@@ -1,2 +1,3 @@
 stopwords
 vader_lexicon
+punkt
